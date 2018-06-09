@@ -3,3 +3,8 @@
 //
 
 #include "Simulation.hpp"
+#include "Ncurses.hpp"
+#include "Scrambler.hpp"
+#include "Descrambler.hpp"
+#include "TimeCounter.hpp"
+#include <thread>
