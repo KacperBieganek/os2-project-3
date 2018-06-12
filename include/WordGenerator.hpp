@@ -15,9 +15,11 @@
 class WordGenerator
 {
 public:
-    WordGenerator(std::vector<std::string> &words, std::atomic<bool> &app_running, std::mutex &words_mutex,
+    WordGenerator(std::vector<std::string> &words, std::atomic<bool> &app_running,
+                  std::atomic<bool> &word_generator_running, std::mutex &words_mutex,
                   std::condition_variable &words_cv) :
             app_running(app_running),
+            word_generator_running(word_generator_running),
             words(words),
             words_mutex(words_mutex),
             words_cv(words_cv) {};
@@ -26,6 +28,7 @@ public:
 
 private:
     std::atomic<bool> &app_running;
+    std::atomic<bool> &word_generator_running;
     std::vector<std::string> &words;
     std::mutex &words_mutex;
     std::condition_variable &words_cv;

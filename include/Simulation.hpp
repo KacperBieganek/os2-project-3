@@ -26,6 +26,8 @@ public:
 
 private:
     std::atomic<bool> app_running{true};
+    std::atomic<bool> word_generator_running{true};
+    std::atomic<bool> encrypters_running{true};
     std::atomic<size_t> time_passed{0};
     std::atomic<size_t> correct_decoding{0};
     std::atomic<size_t> number_of_operations{0};

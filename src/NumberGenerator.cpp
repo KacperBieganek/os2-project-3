@@ -27,7 +27,7 @@ void NumberGenerator::run()
                     random_value = static_cast<uint8_t>(rand() % number_of_letters);
                 }
                 {
-                    std::unique_lock<std::mutex> lock(number_mutex);
+                    std::lock_guard<std::mutex> lock(number_mutex);
                     random_numbers.push_back(random_value);
                 }
                 number_cv.notify_all();
