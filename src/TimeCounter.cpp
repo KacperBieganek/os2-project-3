@@ -4,6 +4,7 @@
 
 #include <thread>
 #include <chrono>
+#include <iostream>
 #include "TimeCounter.hpp"
 
 void TimeCounter::run()

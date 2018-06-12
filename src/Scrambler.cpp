@@ -24,7 +24,10 @@ void Scrambler::run()
             std::lock_guard<std::mutex> lock(decryption_map_mutex);
             decryption_map.insert({encrypted_word, word});
         }
+        encoded_words_cv.notify_one();
+
     }
+    encrypter_running = false;
 }
 
 std::string Scrambler::obtain_word()

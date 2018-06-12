@@ -17,6 +17,7 @@ class Scrambler
 public:
 
     Scrambler(std::atomic<bool> &app_running, std::atomic<bool> &word_generator_running,
+              std::atomic<bool> &encrypter_running,
               std::vector<uint8_t> &random_numbers, std::vector<std::string> &words,
               std::vector<std::string> &encoded_words, std::unordered_map<std::string, std::string> &encryption_map,
               std::unordered_map<std::string, std::string> &decryption_map, std::mutex &number_mutex,
@@ -26,6 +27,7 @@ public:
               std::condition_variable &encoded_words_cv) :
             app_running(app_running),
             word_generator_running(word_generator_running),
+            encrypter_running(encrypter_running),
             random_numbers(random_numbers),
             words(words),
             number_mutex(number_mutex),
@@ -52,6 +54,7 @@ private:
 
     std::atomic<bool> &app_running;
     std::atomic<bool> &word_generator_running;
+    std::atomic<bool> &encrypter_running;
 
     std::vector<uint8_t> &random_numbers;
     std::vector<std::string> &words;
