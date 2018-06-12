@@ -9,7 +9,6 @@
 #include "TimeCounter.hpp"
 #include "NumberGenerator.hpp"
 #include "WordGenerator.hpp"
-#include <thread>
 
 Simulation::Simulation()
 {
@@ -32,7 +31,9 @@ void Simulation::init_ncurses() {}
 
 void Simulation::init_threads()
 {
-    threads.push_back(std::thread{&NumberGenerator::run, NumberGenerator{running, random_numbers}});
     threads.push_back(
-            std::thread{&WordGenerator::run, WordGenerator{words, running}});
+            std::thread{&NumberGenerator::run, NumberGenerator{app_running, random_numbers, number_mutex, number_cv}});
+    threads.push_back(
+            std::thread{&WordGenerator::run, WordGenerator{words, app_running, words_mutex, words_cv}});
+    threads.push_back(std::thread(&TimeCounter::run, TimeCounter{time_passed, app_running}));
 }

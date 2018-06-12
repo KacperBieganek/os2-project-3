@@ -8,7 +8,7 @@
 
 void TimeCounter::run()
 {
-    while(running)
+    while(app_running)
     {
         std::this_thread::sleep_for(std::chrono::seconds(1));
         ++time_passed;

@@ -9,19 +9,26 @@
 #include <atomic>
 #include <vector>
 #include <fstream>
+#include <mutex>
+#include <condition_variable>
 
 class WordGenerator
 {
 public:
-    WordGenerator(std::vector<std::string> &words, std::atomic<bool> &running) :
-            running(running),
-            words(words) {};
+    WordGenerator(std::vector<std::string> &words, std::atomic<bool> &app_running, std::mutex &words_mutex,
+                  std::condition_variable &words_cv) :
+            app_running(app_running),
+            words(words),
+            words_mutex(words_mutex),
+            words_cv(words_cv) {};
 
     void run();
 
 private:
-    std::atomic<bool> &running;
+    std::atomic<bool> &app_running;
     std::vector<std::string> &words;
+    std::mutex &words_mutex;
+    std::condition_variable &words_cv;
 
 };
 

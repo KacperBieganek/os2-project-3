@@ -11,14 +11,17 @@ void WordGenerator::run()
     std::string word;
     if(stream)
     {
-        while(!stream.eof() && running)
+        while(!stream.eof() && app_running)
         {
             std::getline(stream, word);
-            //lock mutex
-            words.push_back(word);
-            //unlock
-            std::cout << word << std::endl;
+            {
+                std::unique_lock<std::mutex> lock(words_mutex); //lock
+                words.push_back(word);
+
+            } //unlock
+            words_cv.notify_all();
         }
+        stream.close();
     } else
     {
         std::cerr << "Failed to open words.txt" << std::endl;

@@ -10,15 +10,15 @@
 class TimeCounter
 {
 public:
-    TimeCounter(std::atomic<size_t> &time_passed, std::atomic<bool> &running) :
+    TimeCounter(std::atomic<size_t> &time_passed, std::atomic<bool> &app_running) :
             time_passed(time_passed),
-            running(running) {};
+            app_running(app_running) {};
 
     void run();
 
 private:
     std::atomic<size_t> &time_passed;
-    std::atomic<bool> &running;
+    std::atomic<bool> &app_running;
 };
 
 #endif //CIPHER_TIMECOUNTER_HPP

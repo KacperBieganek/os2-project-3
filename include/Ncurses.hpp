@@ -15,7 +15,7 @@ public:
     void run();
 
 private:
-    std::atomic<bool> &running;
+    std::atomic<bool> &app_running;
     std::atomic<unsigned int> &time;
     std::atomic<double> &correct_percent;
     std::atomic<size_t> &number_of_operations;

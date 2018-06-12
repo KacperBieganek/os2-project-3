@@ -8,19 +8,26 @@
 #include <vector>
 #include <iostream>
 #include <atomic>
+#include <mutex>
+#include <condition_variable>
 
 class NumberGenerator
 {
 public:
-    NumberGenerator(std::atomic<bool> &running, std::vector<uint8_t> &random_numbers) :
-            running(running),
-            random_numbers(random_numbers) {};
+    NumberGenerator(std::atomic<bool> &app_running, std::vector<uint8_t> &random_numbers, std::mutex &number_mutex,
+                    std::condition_variable &number_cv) :
+            app_running(app_running),
+            random_numbers(random_numbers),
+            number_mutex(number_mutex),
+            number_cv(number_cv) {};
 
     void run();
 
 private:
     std::vector<uint8_t> &random_numbers;
-    std::atomic<bool> &running;
+    std::atomic<bool> &app_running;
+    std::mutex &number_mutex;
+    std::condition_variable &number_cv;
 };
 
 #endif //CIPHER_NUMBERGENERATOR_HPP

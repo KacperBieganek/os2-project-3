@@ -25,11 +25,11 @@ public:
     void init_threads();
 
 private:
-    std::atomic<size_t> time{0};
-    std::atomic<bool> running{true};
-    std::atomic<int> number_of_operations{0};
-    std::atomic<int> correct_decoding{0};
-    std::atomic<double> correct_decode_percent{0.0d};
+    std::atomic<bool> app_running{true};
+    std::atomic<size_t> time_passed{0};
+    std::atomic<size_t> correct_decoding{0};
+    std::atomic<size_t> number_of_operations{0};
+    std::atomic<double> correct_decode_percent{0.0};
 
     std::vector<uint8_t> random_numbers;
     std::vector<std::string> words;
@@ -40,12 +40,14 @@ private:
     std::unordered_map<std::string, std::string> decryption_map;
 
     std::mutex words_mutex;
+    std::mutex number_mutex;
     std::mutex encrypted_words_mutex;
     std::mutex decrypted_words_mutex;
     std::mutex encryption_map_mutex;
     std::mutex decryption_map_mutex;
 
     std::condition_variable words_cv;
+    std::condition_variable number_cv;
     std::condition_variable encrypted_words_cv;
     std::condition_variable decrypted_words_cv;
 };
