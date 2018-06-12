@@ -8,9 +8,12 @@
 class Scrambler
 {
 public:
+    void run();
 
 private:
-
+    std::atomic<bool> &running;
+    std::vector<std::string> &words;
+    std::vector<std::string> &encoded_words;
 };
 
 #endif //CIPHER_SCRAMBLER_HPP

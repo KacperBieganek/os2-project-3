@@ -13,17 +13,15 @@
 class WordGenerator
 {
 public:
-    WordGenerator(std::fstream &file_stream, std::vector<std::string> &words, std::atomic<bool> &running) :
+    WordGenerator(std::vector<std::string> &words, std::atomic<bool> &running) :
             running(running),
-            words(words),
-            file_stream(file_stream) {};
+            words(words) {};
 
     void run();
 
 private:
-    std::ifstream file_stream;
-    std::atomic<bool> running;
-    std::vector<std::string> words;
+    std::atomic<bool> &running;
+    std::vector<std::string> &words;
 
 };
 

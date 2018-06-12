@@ -12,15 +12,15 @@
 class NumberGenerator
 {
 public:
-    NumberGenerator(std::atomic<bool> &running, std::vector<unsigned char> &random_numbers) :
+    NumberGenerator(std::atomic<bool> &running, std::vector<uint8_t> &random_numbers) :
             running(running),
             random_numbers(random_numbers) {};
 
     void run();
 
 private:
-    std::vector<unsigned char> random_numbers;
-    std::atomic<bool> running;
+    std::vector<uint8_t> &random_numbers;
+    std::atomic<bool> &running;
 };
 
 #endif //CIPHER_NUMBERGENERATOR_HPP
