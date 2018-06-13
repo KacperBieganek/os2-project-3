@@ -24,10 +24,6 @@ public:
 
     static void unlock();
 
-    static std::mutex &get_mutex();
-
-    static std::condition_variable &get_condition_variable();
-
 private:
     static std::mutex mx;
     static std::condition_variable cv;

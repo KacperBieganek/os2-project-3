@@ -23,11 +23,15 @@ void Scrambler::run()
 
 std::string Scrambler::obtain_word()
 {
+    std::string word;
     std::unique_lock<std::mutex> lock(words_mutex);
     if(word_generator_running && words.empty())
         words_cv.wait(lock, [this] { return !words.empty(); });
-    auto word = words.back();
-    words.pop_back();
+    if(!words.empty())
+    {
+        word = words.back();
+        words.pop_back();
+    }
     lock.unlock();
     return word;
 }

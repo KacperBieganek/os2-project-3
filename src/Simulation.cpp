@@ -52,14 +52,10 @@ void Simulation::init_threads()
     threads.push_back(std::thread(&TimeCounter::run, TimeCounter{time_passed, app_running}));
     threads.push_back(std::thread(&Terminator::run,
                                   Terminator{app_running, word_generator_running, encrypters_running, words,
-                                             encrypted_words}));
+                                             encrypted_words, words_mutex, encrypted_words_mutex}));
     threads.push_back(std::thread(&StatisticsGenerator::run,
                                   StatisticsGenerator{number_of_operations, correct_decoding, correct_decode_percent,
                                                       app_running}));
-    threads.push_back(std::thread(&Ncurses::run,
-                                  Ncurses{app_running, time_passed, number_of_operations, correct_decoding,
-                                          correct_decode_percent,
-                                          decrypted_words, decrypted_words_mutex, width, height}));
     for(size_t i = 0; i < 5; i++)
     {
         threads.push_back(std::thread(&Scrambler::run,
@@ -79,4 +75,8 @@ void Simulation::init_threads()
                                                   number_of_operations, correct_decoding}));
 
     }
+    threads.push_back(std::thread(&Ncurses::run,
+                                  Ncurses{app_running, time_passed, number_of_operations, correct_decoding,
+                                          correct_decode_percent,
+                                          decrypted_words, decrypted_words_mutex, width, height}));
 }

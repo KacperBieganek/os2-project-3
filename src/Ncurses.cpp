@@ -36,7 +36,7 @@ void Ncurses::run()
 
         {
             mvwprintw(w_recently, 1, 0, "recently decoded:");
-            std::unique_lock<std::mutex> lock1(decoded_words_mutex);
+            std::lock_guard<std::mutex> lock1(decoded_words_mutex);
             if(!decoded_words.empty())
             {
                 mvwprintw(w_recently, 3, 4, "%s", decoded_words.back().c_str());
@@ -68,6 +68,6 @@ void Ncurses::run()
 
         wrefresh(w_author);
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        std::this_thread::sleep_for(std::chrono::milliseconds(200));
     }
 }

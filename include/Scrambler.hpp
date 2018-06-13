@@ -53,6 +53,7 @@ private:
     std::vector<uint8_t> &random_numbers;
     std::vector<std::string> &words;
     std::vector<std::string> &encoded_words;
+
     std::mutex &number_mutex;
     std::mutex &words_mutex;
     std::mutex &encoded_words_mutex;
