@@ -15,9 +15,14 @@ void WordGenerator::run()
         {
             std::getline(stream, word);
             {
-                std::lock_guard<std::mutex> lock(words_mutex); //lock
-                words.push_back(word);
-
+                {
+                    std::lock_guard<std::mutex> lock(words_mutex); //lock
+                    words.push_back(word);
+                }
+                {
+                    std::lock_guard<std::mutex> lock(list_of_words_mutex);
+                    list_of_words.push_back(word);
+                }
             } //unlock
             words_cv.notify_all();
         }

@@ -14,18 +14,9 @@ void Scrambler::run()
         auto encrypted_word = encrypt(word, key);
         {
             std::lock_guard<std::mutex> lock(encoded_words_mutex);
-            encoded_words.push_back(word);
-        }
-        {
-            std::lock_guard<std::mutex> lock(encryption_map_mutex);
-            encryption_map.insert({word, encrypted_word});
-        }
-        {
-            std::lock_guard<std::mutex> lock(decryption_map_mutex);
-            decryption_map.insert({encrypted_word, word});
+            encoded_words.push_back(encrypted_word);
         }
         encoded_words_cv.notify_one();
-
     }
     encrypter_running = false;
 }
@@ -57,7 +48,7 @@ std::string Scrambler::encrypt(std::string word, uint8_t key)
     for(auto i = 0; i < len; i++)
     {
         auto temp = static_cast<unsigned char>(word[i] + key);
-        (temp <= 'z') ? (word[i] = temp) : (word[i] = static_cast<unsigned char>(temp - 26));
+        (temp <= 'z' && temp >= 'a') ? (word[i] = temp) : (word[i] = static_cast<unsigned char>(temp - 26));
     }
     return word;
 }

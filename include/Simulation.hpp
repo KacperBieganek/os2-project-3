@@ -38,20 +38,17 @@ private:
     std::vector<std::string> encrypted_words;
     std::vector<std::string> decrypted_words;
     std::vector<std::thread> threads;
-    std::unordered_map<std::string, std::string> encryption_map;
-    std::unordered_map<std::string, std::string> decryption_map;
+    std::vector<std::string> list_of_words;
 
     std::mutex words_mutex;
     std::mutex number_mutex;
     std::mutex encrypted_words_mutex;
     std::mutex decrypted_words_mutex;
-    std::mutex encryption_map_mutex;
-    std::mutex decryption_map_mutex;
+    std::mutex list_of_words_mutex;
 
     std::condition_variable words_cv;
     std::condition_variable number_cv;
     std::condition_variable encrypted_words_cv;
-    std::condition_variable decrypted_words_cv;
 };
 
 #endif //CIPHER_SIMULATION_HPP

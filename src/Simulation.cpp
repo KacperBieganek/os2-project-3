@@ -13,6 +13,7 @@
 
 Simulation::Simulation()
 {
+    list_of_words.reserve(3000);
     init_ncurses();
     init_threads();
 }
@@ -23,8 +24,7 @@ Simulation::~Simulation()
         thread.join();
     words.clear();
     encrypted_words.clear();
-    encryption_map.clear();
-    decryption_map.clear();
+    list_of_words.clear();
     random_numbers.clear();
 }
 
@@ -36,15 +36,25 @@ void Simulation::init_threads()
             std::thread{&NumberGenerator::run, NumberGenerator{app_running, random_numbers, number_mutex, number_cv}});
     threads.push_back(
             std::thread{&WordGenerator::run,
-                        WordGenerator{words, app_running, word_generator_running, words_mutex, words_cv}});
+                        WordGenerator{words, list_of_words, app_running, list_of_words_mutex, word_generator_running,
+                                      words_mutex, words_cv}});
     threads.push_back(std::thread(&TimeCounter::run, TimeCounter{time_passed, app_running}));
     threads.push_back(std::thread(&Scrambler::run,
                                   Scrambler{app_running, word_generator_running, encrypters_running, random_numbers,
                                             words, encrypted_words,
-                                            encryption_map, decryption_map, number_mutex, words_mutex,
-                                            encrypted_words_mutex, encryption_map_mutex, decryption_map_mutex,
+                                            number_mutex, words_mutex,
+                                            encrypted_words_mutex,
                                             number_cv, words_cv, encrypted_words_cv}));
     threads.push_back(std::thread(&Terminator::run,
                                   Terminator{app_running, word_generator_running, encrypters_running, words,
                                              encrypted_words}));
+    for(int i = 0; i < 10; i++)
+    {
+        threads.push_back(std::thread(&Descrambler::run,
+                                      Descrambler{app_running, encrypters_running, random_numbers, decrypted_words,
+                                                  encrypted_words, number_mutex,
+                                                  decrypted_words_mutex, encrypted_words_mutex, number_cv,
+                                                  encrypted_words_cv, list_of_words, list_of_words_mutex}));
+
+    }
 }
