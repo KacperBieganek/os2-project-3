@@ -37,8 +37,8 @@ private:
     std::vector<std::string> words;
     std::vector<std::string> encrypted_words;
     std::vector<std::string> decrypted_words;
-    std::vector<std::thread> threads;
     std::vector<std::string> list_of_words;
+    std::vector<std::thread> threads;
 
     std::mutex words_mutex;
     std::mutex number_mutex;

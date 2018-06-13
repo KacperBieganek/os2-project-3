@@ -55,7 +55,9 @@ std::string Descrambler::decrypt(std::string word)
             auto temp = static_cast<unsigned char>(decrypted_word[i] - key);
             (temp >= 'a') ? decrypted_word[i] = temp : decrypted_word[i] = static_cast<unsigned char>(temp + 26);
         }
+        ++number_of_operations;
     } while(!validate(decrypted_word));
+    ++correct_decoding;
     return decrypted_word;
 }
 

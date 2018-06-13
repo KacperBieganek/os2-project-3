@@ -21,7 +21,8 @@ public:
                 std::mutex &decrypted_words_mutex, std::mutex &encrypted_words_mutex,
                 std::condition_variable &number_cv,
                 std::condition_variable &encrypted_words_cv, std::vector<std::string> &list_of_words,
-                std::mutex &list_of_words_mutex) :
+                std::mutex &list_of_words_mutex, std::atomic<size_t> &number_of_operations,
+                std::atomic<size_t> &correct_decoding) :
             app_running(app_running),
             encrypter_running(encrypter_running),
             random_numbers(random_numbers),
@@ -33,7 +34,9 @@ public:
             number_cv(number_cv),
             encrypted_words_cv(encrypted_words_cv),
             list_of_words(list_of_words),
-            list_of_words_mutex(list_of_words_mutex) {};
+            list_of_words_mutex(list_of_words_mutex),
+            number_of_operations(number_of_operations),
+            correct_decoding(correct_decoding) {};
 
     void run();
 
@@ -49,6 +52,8 @@ private:
 
     std::atomic<bool> &app_running;
     std::atomic<bool> &encrypter_running;
+    std::atomic<size_t> &number_of_operations;
+    std::atomic<size_t> &correct_decoding;
 
     std::vector<uint8_t> &random_numbers;
     std::vector<std::string> &decrypted_words;
