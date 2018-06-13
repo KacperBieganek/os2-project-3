@@ -6,6 +6,7 @@
 #define CIPHER_STATISTICSGENERATOR_HPP
 
 #include <atomic>
+#include <string>
 
 class StatisticsGenerator
 {

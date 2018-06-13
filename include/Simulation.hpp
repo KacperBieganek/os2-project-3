@@ -8,10 +8,10 @@
 #include <atomic>
 #include <string>
 #include <vector>
-#include <unordered_map>
 #include <mutex>
 #include <condition_variable>
 #include <thread>
+#include "Ncurses.hpp"
 
 class Simulation
 {
@@ -25,6 +25,9 @@ public:
     void init_threads();
 
 private:
+    int height;
+    int width;
+
     std::atomic<bool> app_running{true};
     std::atomic<bool> word_generator_running{true};
     std::atomic<bool> encrypters_running{true};

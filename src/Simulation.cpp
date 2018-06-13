@@ -11,6 +11,7 @@
 #include "NumberGenerator.hpp"
 #include "WordGenerator.hpp"
 #include "StatisticsGenerator.hpp"
+#include <curses.h>
 
 Simulation::Simulation()
 {
@@ -24,13 +25,21 @@ Simulation::~Simulation()
 {
     for(auto &thread : threads)
         thread.join();
+    endwin();
     words.clear();
     encrypted_words.clear();
     list_of_words.clear();
     random_numbers.clear();
 }
 
-void Simulation::init_ncurses() {}
+void Simulation::init_ncurses()
+{
+    initscr();
+    noecho();
+    curs_set(FALSE);
+    getmaxyx(stdscr, height, width);
+    refresh();
+}
 
 void Simulation::init_threads()
 {
@@ -47,6 +56,10 @@ void Simulation::init_threads()
     threads.push_back(std::thread(&StatisticsGenerator::run,
                                   StatisticsGenerator{number_of_operations, correct_decoding, correct_decode_percent,
                                                       app_running}));
+    threads.push_back(std::thread(&Ncurses::run,
+                                  Ncurses{app_running, time_passed, number_of_operations, correct_decoding,
+                                          correct_decode_percent,
+                                          decrypted_words, decrypted_words_mutex, width, height}));
     for(size_t i = 0; i < 5; i++)
     {
         threads.push_back(std::thread(&Scrambler::run,

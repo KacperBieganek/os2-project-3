@@ -2,10 +2,10 @@
 // Created by kacper on 08.06.18.
 //
 
+#include "Descrambler.hpp"
 #include <iostream>
 #include <chrono>
 #include <algorithm>
-#include "Descrambler.hpp"
 #include <thread>
 
 void Descrambler::run()
